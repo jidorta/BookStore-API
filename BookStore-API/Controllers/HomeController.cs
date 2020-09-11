@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BookStore_API.Contracts;
+
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -21,11 +21,11 @@ namespace BookStore_API.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
-        private readonly ILoggerService _logger;
+       
 
-        public HomeController(ILoggerService logger)
+        public HomeController()
         {
-            _logger = logger;
+           
         }
 
         ///<summary>
@@ -36,7 +36,6 @@ namespace BookStore_API.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            _logger.LogInfo("Acceso Home Controller");
             return new string[] { "value1", "value2" };
         }
 
@@ -51,7 +50,7 @@ namespace BookStore_API.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            _logger.LogDebug("Got a Value");
+           
             return "value";
         }
 
@@ -59,7 +58,7 @@ namespace BookStore_API.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
-            _logger.LogIError("This is a error");
+            
         }
 
         // PUT api/<HomeController>/5
@@ -72,7 +71,7 @@ namespace BookStore_API.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            _logger.LogWarm("this is a warning");
+            
         }
     }
 }
