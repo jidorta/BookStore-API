@@ -17,6 +17,8 @@ using System.Reflection;
 using System.IO;
 using AutoMapper;
 using BookStore_API.Mappings;
+using BookStore_API.Services;
+using BookStore_API.Contracts;
 
 namespace BookStore_API
 {
@@ -64,7 +66,7 @@ namespace BookStore_API
             });
 
 
-         
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
 
             services.AddControllers();
         }
