@@ -198,6 +198,8 @@ namespace BookStore_API.Controllers
                     return BadRequest();
                 }
 
+                var author = await _authorRepository.FindById(id);
+
                 var isExist = await _authorRepository.isExists(id);
 
                 if (!isExist)
