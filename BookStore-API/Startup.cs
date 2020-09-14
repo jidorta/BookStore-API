@@ -20,6 +20,7 @@ using BookStore_API.Mappings;
 using BookStore_API.Services;
 using BookStore_API.Contracts;
 
+
 namespace BookStore_API
 {
     public class Startup
@@ -42,7 +43,7 @@ namespace BookStore_API
 
 
             services.AddCors(o => {
-                o.AddPolicy("CorPolicy",
+                o.AddPolicy("CorsPolicy",
                     builder => builder.AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader());
@@ -51,22 +52,26 @@ namespace BookStore_API
 
             services.AddAutoMapper(typeof(Maps));
 
-            services.AddSwaggerGen(c => {
+           
 
-                c.SwaggerDoc("v1", new OpenApiInfo {
-                    Title="My Book Store API" , 
-                    Version = "v1",
-                    Description =" This is an educational API for a Book Store"
+                services.AddSwaggerGen(c => {
+                    c.SwaggerDoc("v2", new OpenApiInfo
+                    {
+                        Title = "Book Store API",
+                        Version = "v2",
+                        Description = "This is an educational API for a Book Store"
+                    });
+
+                    var xfile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                    var xpath = Path.Combine(AppContext.BaseDirectory, xfile);
+                    c.IncludeXmlComments(xpath);
                 });
 
-                var xfile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xpath = Path.Combine(AppContext.BaseDirectory, xfile);
-                c.IncludeXmlComments(xpath);
-            
-            });
+
+                services.AddScoped<IAuthorRepository, AuthorRepository>();
+                services.AddScoped<IBookRepository, BookRepository>();
 
 
-            services.AddScoped<IAuthorRepository, AuthorRepository>();
 
             services.AddControllers();
         }
@@ -90,14 +95,14 @@ namespace BookStore_API
             app.UseSwagger();
 
             app.UseSwaggerUI(c => {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Book Store API");
+                c.SwaggerEndpoint("/swagger/v2/swagger.json", "Book Store API");
                 c.RoutePrefix = "";
-            
             });
 
             app.UseHttpsRedirection();
 
             app.UseCors("CorsPolicy");
+
 
             app.UseRouting();
 

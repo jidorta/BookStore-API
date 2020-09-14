@@ -223,7 +223,7 @@ namespace BookStore_API.Controllers
         }
 
 
-                private ObjectResult InternalError(string message)
+        private ObjectResult InternalError(string message)
         {
             return StatusCode(500, "Something went wron.Please contact the Administrador");
         }
